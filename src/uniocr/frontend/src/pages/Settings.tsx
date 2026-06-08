@@ -193,6 +193,22 @@ export default function Settings() {
                   <div className={`h-full ${systemInfo.disk_used_percent > 80 ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${systemInfo.disk_used_percent}%` }} />
                 </div>
               </div>
+              <div>
+                <div className="flex justify-between items-end mb-1">
+                  <span className="text-white/60 text-xs">Swap ({systemInfo.swap_used_gb} GB / {systemInfo.swap_total_gb} GB)</span>
+                  <span className="text-white text-xs font-medium">{systemInfo.swap_percent}%</span>
+                </div>
+                <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
+                  <div className={`h-full ${systemInfo.swap_percent > 50 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${systemInfo.swap_percent}%` }} />
+                </div>
+              </div>
+              <div className="flex items-center justify-between mt-1 pt-3 border-t border-white/10">
+                <span className="text-white/60 text-[10px] uppercase font-bold tracking-wider">Network I/O</span>
+                <span className="text-white/80 text-xs font-medium flex gap-2">
+                  <span className="text-blue-400">↓ {systemInfo.net_recv_mb} MB</span>
+                  <span className="text-green-400">↑ {systemInfo.net_sent_mb} MB</span>
+                </span>
+              </div>
             </div>
           </div>
 

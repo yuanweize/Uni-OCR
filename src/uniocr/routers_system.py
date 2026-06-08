@@ -50,6 +50,19 @@ def get_gpu_info():
 
 @router.get("/info", dependencies=[Depends(get_current_user)])
 def get_system_info():
+    vmem = psutil.virtual_memory()
+    mem_total_gb = vmem.total / (1024**3)
+    mem_used_gb = (vmem.total - vmem.available) / (1024**3)
+    
+    # Disk usage (calculate used based on free space for better accuracy on macOS)
+    disk_usage = psutil.disk_usage('/')
+    disk_total_gb = disk_usage.total / (1024**3)
+    disk_free_gb = disk_usage.free / (1024**3)
+    disk_used_gb = disk_total_gb - disk_free_gb
+    
+    swap = psutil.swap_memory()
+    net = psutil.net_io_counters()
+
     info = {
         "os": platform.system(),
         "release": platform.release(),
@@ -58,12 +71,17 @@ def get_system_info():
         "cpu_model": get_cpu_model(),
         "cpu_cores": psutil.cpu_count(logical=True),
         "cpu_percent": psutil.cpu_percent(interval=0.1),
-        "memory_total_gb": round(psutil.virtual_memory().total / (1024**3), 2),
-        "memory_used_gb": round(psutil.virtual_memory().used / (1024**3), 2),
-        "memory_used_percent": psutil.virtual_memory().percent,
-        "disk_total_gb": round(psutil.disk_usage('/').total / (1024**3), 2),
-        "disk_used_gb": round(psutil.disk_usage('/').used / (1024**3), 2),
-        "disk_used_percent": psutil.disk_usage('/').percent,
+        "memory_total_gb": round(mem_total_gb, 2),
+        "memory_used_gb": round(mem_used_gb, 2),
+        "memory_used_percent": round((mem_used_gb / mem_total_gb) * 100, 1) if mem_total_gb > 0 else 0,
+        "disk_total_gb": round(disk_total_gb, 2),
+        "disk_used_gb": round(disk_used_gb, 2),
+        "disk_used_percent": round((disk_used_gb / disk_total_gb) * 100, 1) if disk_total_gb > 0 else 0,
+        "swap_total_gb": round(swap.total / (1024**3), 2),
+        "swap_used_gb": round(swap.used / (1024**3), 2),
+        "swap_percent": swap.percent,
+        "net_sent_mb": round(net.bytes_sent / (1024**2), 2),
+        "net_recv_mb": round(net.bytes_recv / (1024**2), 2),
         "gpu_model": get_gpu_info(),
         "uptime_hours": round((time.time() - psutil.boot_time()) / 3600, 1),
         "network_ip": socket.gethostbyname(socket.gethostname()) if socket.gethostname() else "127.0.0.1",
