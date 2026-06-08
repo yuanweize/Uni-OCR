@@ -1,0 +1,38 @@
+[project]
+name = "uniocr"
+version = "0.1.0"
+description = "UniOCR - Unified multilingual OCR abstraction layer with pluggable engine support."
+readme = "README.md"
+authors = [
+    { name = "Weize Yuan", email = "iyuanweize@gmail.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "PyMuPDF>=1.24.0",
+    "Pillow>=10.0.0",
+]
+
+[project.optional-dependencies]
+paddle = [
+    "paddlepaddle>=3.2.1",
+    "paddleocr[doc-parser]>=3.0.0",
+]
+apple = [
+    "pyobjc-framework-Vision>=11.0; sys_platform == 'darwin'",
+    "pyobjc-framework-Quartz>=11.0; sys_platform == 'darwin'",
+]
+api = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "python-multipart>=0.0.18",
+]
+all = [
+    "uniocr[paddle,apple,api]",
+]
+
+[project.scripts]
+uniocr = "uniocr.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.28,<0.10.0"]
+build-backend = "uv_build"
