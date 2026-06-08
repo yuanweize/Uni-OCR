@@ -20,16 +20,16 @@
 
 专为开发者、AI Agent 和自动化管线（n8n、Dify、Telegram Bot 等）设计。
 
-## ✨ 核心特性
+## ✨ V1.0 Pro Max 核心特性
 
-- 🔌 **双擎驱动** — 深度文档 AI (PaddleOCR-VL) 与 macOS 原生视觉 (Apple Vision)，支持自动降级兜底。
-- ⚡ **零配置满血加速** — 自动探测 Apple Silicon → 启动 MLX-VLM 引擎 → 满血调用神经网络引擎 (NPU)，无需繁琐环境配置。
-- 📄 **万物皆可提取** — 完美支持本地路径、网络 URL、Base64 编码，甚至原生支持**多页 PDF 自动拆分提取**。
-- 📦 **全格式输出** — 支持 `.text`, `.markdown`, `.json`，以及直接生成**可搜索双层 PDF**。
-- 🚀 **智能缓存** — 内置内存级 LRU 缓存，同一文件在不同格式之间切换可实现 **0秒瞬间返回**，拒绝重复消耗算力。
-- 🌐 **企业级控制台** — 极其优雅的 Web UI 控制台，内置高级硬件实时监控（CPU/GPU/RAM），采用 SQLite 提供 API Key 管理及 2FA 两步验证。
-- 🐳 **Docker 极简部署** — 提供官方镜像，一行代码拉起生产级服务。
-- 🖥️ **全能 CLI 终端** — 提供 `uniocr extract`, `uniocr engines`, `uniocr serve` 命令。
+- 🖥️ **极其优雅的企业级控制台** — 全新构建的 Glassmorphism (毛玻璃) 现代化 Web UI，集成了交互式 OCR 游乐场、API 生成器及完整运行监控。
+- 📊 **极客级硬件雷达** — 实时探测并轮询服务器物理底层状态：从 CPU/GPU 频率、内存/Swap 分配，到 Apple Neural Engine 及底层模型库真实加载状态，尽收眼底。
+- 🔐 **军工级数据安全** — 内置本地 SQLite 持久化数据库。全面支持 2FA 动态令牌两步验证、Admin 强密码管理及私有/公开控制台一键切换。
+- 🔑 **丝滑的 API Key 管理** — 界面化一键签发/吊销 API Token，并在生成时贴心提供组装好的专属 `curl` 联调代码片段。
+- 🔌 **双擎无缝切换** — 深度文档 AI (PaddleOCR-VL) 与 macOS 原生视觉 (Apple Vision)，支持自动降级兜底。
+- ⚡ **零配置满血加速** — 自动探测 Apple Silicon → 启动 MLX-VLM 引擎 → 满血调用 NPU 神经网络引擎。
+- 🚀 **零时差智能缓存 (LRU)** — 对近期文件瞬间完成结果格式切换（TXT、JSON、MD、PDF），秒级下载与预览，拒绝重复消耗算力。
+- 🐳 **Docker 极简部署** — 提供官方镜像，一行代码拉起完整的前后端生产级服务。
 
 ## 🚀 快速开始
 
@@ -45,17 +45,15 @@ pip install "uniocr[paddle]"
 # 包含 Apple Vision（仅 macOS，零依赖）
 pip install "uniocr[apple]"
 
-# 全部安装
+# 全部安装 (推荐)
 pip install "uniocr[all]"
 ```
 
 ### 方式二：Docker（推荐用于服务器）
 
 ```bash
-# 快速启动 — 后台运行
-docker run -d --name uniocr -p 8000:8000 ghcr.io/yuanweize/uni-ocr:latest
-
-# 或使用 Docker Compose（推荐）
+# 或使用 Docker Compose（极速拉起所有组件）
+curl -O https://raw.githubusercontent.com/yuanweize/uni-ocr/master/docker-compose.yml
 docker compose up -d
 
 # 检查运行状态
@@ -80,99 +78,38 @@ print(doc.to_dict())                  # JSON 可序列化字典
 ### 命令行
 
 ```bash
-# 列出可用引擎
-uniocr engines
+# 启动完整的前后端 Web UI 服务控制台
+uniocr serve --port 8000
 
 # 提取文本（默认输出 Markdown）
 uniocr extract document.pdf -o result.md
 
-# 生成双层可搜索 PDF（只需后缀名指定为 .pdf 即可）
+# 生成双层可搜索 PDF
 uniocr extract input_image.jpg -o output_searchable.pdf
-
-# 指定引擎和输出格式
-uniocr extract scan.png --engine apple --format json -o result.json
-
-# 启动 API 服务（生产模式，4 个 worker）
-uniocr serve --port 8000 --workers 4
 ```
 
-### REST API
+### REST API 与 控制台
 
 ```bash
 # 启动
 uniocr serve --port 8000
-
-# 上传文件提取
-curl -X POST http://localhost:8000/extract \
-  -F "file=@document.pdf" -F "engine=auto"
-
-# 通过 URL 提取
-curl -X POST http://localhost:8000/extract/url \
-  -F "url=https://example.com/image.png"
-
-# 直接返回“双层可搜索 PDF”文件流（支持直接下载）
-curl -X POST http://localhost:8000/extract/pdf \
-  -F "file=@scan.png" -o searchable.pdf
-
-# 批量处理
-curl -X POST http://localhost:8000/extract/batch \
-  -F "files=@page1.png" -F "files=@page2.png"
 ```
-
-交互式 API 文档：`http://localhost:8000/docs`
+- **Web UI 控制台**: `http://localhost:8000/`
+- **系统设置与硬件雷达**: `http://localhost:8000/settings`
+- **交互式 API 文档**: `http://localhost:8000/docs`
 
 #### API 端点一览
 
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | `GET` | `/health` | 健康检查（含引擎列表） |
-| `GET` | `/engines` | 列出可用 OCR 引擎 |
-| `GET` | `/docs` | Swagger 交互式文档 |
 | `POST` | `/extract` | 上传文件提取（返回 JSON/Markdown） |
 | `POST` | `/extract/pdf` | 上传文件提取（直接返回双层 PDF 文件） |
 | `POST` | `/extract/url` | 通过 URL 提取 |
-| `POST` | `/extract/batch` | 批量处理多个文件 |
 
-#### 响应格式
-
-```json
-{
-  "request_id": "ab07767c-...",
-  "engine": "PaddleOCRVLAdapter",
-  "page_count": 1,
-  "text": "发票编号 #12345\n合计：€1,234.56",
-  "markdown": "# 发票编号 #12345\n\n合计：€1,234.56",
-  "pages": [...],
-  "elapsed_seconds": 2.35
-}
-```
+*(以上接口若关闭了公开访问，则均可通过在 Header 传入 `Authorization: Bearer <API_KEY>` 进行调用)*
 
 ## 🐳 Docker 部署
-
-### 快速运行
-
-```bash
-docker run -d \
-  --name uniocr \
-  -p 8000:8000 \
-  -v uniocr-models:/root/.paddlex \
-  ghcr.io/yuanweize/uni-ocr:latest
-```
-
-### Docker Compose（推荐）
-
-```bash
-# 后台启动
-docker compose up -d
-
-# 查看日志
-docker compose logs -f
-
-# 停止
-docker compose down
-```
-
-### 本地构建
 
 ```bash
 git clone https://github.com/yuanweize/uni-ocr.git
@@ -188,30 +125,7 @@ docker compose up -d --build
 | 2 | **PaddleOCR-VL** (CPU) | 同上，未安装 MLX-VLM 时 | ⚡ |
 | 3 | **Apple Vision** | 简单文本，仅 macOS，极速 | ⚡⚡⚡ |
 
-> 在 Apple Silicon 上，安装 `mlx-vlm` 后 UniOCR 会**自动启动** MLX-VLM 服务，退出时自动清理。完全零配置。
-
-## 🔗 集成示例
-
-### n8n 工作流
-
-```
-Telegram Trigger → HTTP Request (UniOCR) → AI Agent → ERPNext API
-```
-
-### Bob (macOS OCR 插件)
-
-```bash
-uniocr serve --port 8000
-# Bob → 偏好设置 → OCR → 自定义 API → http://localhost:8000/extract
-```
-
-## ⚙️ 环境变量
-
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `UNIOCR_PORT` | API 服务端口 (Docker Compose) | `8000` |
-| `UNIOCR_MLX_VLM_URL` | 手动指定 MLX-VLM 服务地址 | 自动检测 |
-| `UNIOCR_MLX_VLM_MODEL` | MLX-VLM 模型名 | `PaddlePaddle/PaddleOCR-VL-1.6` |
+> 在 Apple Silicon 上，安装 `mlx-vlm` 后 UniOCR 会**自动启动** MLX-VLM 服务，满载 NPU。完全零配置。
 
 ## 📄 许可证
 

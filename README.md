@@ -20,46 +20,23 @@
 
 Built for developers, AI agents, and automation pipelines (n8n, Dify, Telegram bots, etc.).
 
-## ✨ Highlights
+## ✨ V1.0 Pro Max Highlights
 
-- 🔌 **Pluggable engines** — PaddleOCR-VL (deep document AI) and Apple Vision (native macOS) with automatic priority fallback
-- ⚡ **Zero-config acceleration** — Auto-detects Apple Silicon → launches MLX-VLM → Neural Engine speedup.
-- 📄 **Accepts Anything** — File paths, URLs, Base64, multi-page PDFs (auto-flattened).
-- 📦 **Unified Output** — Supports `.text`, `.markdown`, `.json`, **and Searchable Dual-Layer PDFs**.
-- 🚀 **Smart LRU Cache** — Instant zero-delay format switching for recent files without re-running the neural network.
-- 🌐 **Built-in REST API & Dashboard** — FastAPI powered, complete with interactive OcrConsole UI, Advanced Hardware Monitoring (CPU/GPU/RAM/ROM), and built-in SQLite for API Keys & 2FA management.
-- 🐳 **Docker ready** — single command deployment via Docker Compose
-- 🖥️ **CLI** — `uniocr extract`, `uniocr engines`, `uniocr serve`
-
-## 🏗️ Architecture
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                    User Interface Layer                       │
-│              SDK  ·  CLI  ·  REST API                        │
-├──────────────────────────────────────────────────────────────┤
-│                    Input Processor                           │
-│         URL → File  ·  PDF → Images  ·  Base64 → File       │
-├──────────────────────────────────────────────────────────────┤
-│                Engine Dispatcher (auto)                      │
-│         PaddleOCR-VL → Apple Vision → fallback               │
-├─────────────────────┬────────────────────────────────────────┤
-│   PaddleOCR-VL      │        Apple Vision                    │
-│   + MLX-VLM         │        (native macOS)                  │
-│   (auto-accelerated)│                                        │
-├─────────────────────┴────────────────────────────────────────┤
-│                 Standardised Output                          │
-│          Document → Pages → Blocks                           │
-│          .text  ·  .markdown  ·  .to_dict()                  │
-└──────────────────────────────────────────────────────────────┘
-```
+- 🖥️ **Stunning Enterprise Dashboard** — A fully re-engineered Glassmorphism Web UI featuring an interactive OCR playground, API generator, and live system monitoring.
+- 📊 **Geek-Level Hardware Radar** — Real-time backend polling of physical sensor data: CPU/GPU frequencies, RAM/Swap allocation, Apple Neural Engine status, and active AI model library versions.
+- 🔐 **Military-Grade Security** — Built-in local SQLite persistence. Full support for 2FA (TOTP), Admin master passwords, and one-click toggles between public/private API access.
+- 🔑 **Seamless API Key Management** — Issue and revoke API Tokens directly from the UI, with auto-generated ready-to-use `curl` snippets for instant integration testing.
+- 🔌 **Pluggable Engines** — PaddleOCR-VL (deep document AI) and Apple Vision (native macOS) with automatic priority fallback.
+- ⚡ **Zero-Config Acceleration** — Auto-detects Apple Silicon → launches MLX-VLM → offloads to Neural Engine (NPU).
+- 🚀 **Zero-Delay Smart Cache (LRU)** — Instantaneous format switching (TXT, JSON, MD, PDF download/preview) for recent files without re-running the neural network.
+- 🐳 **Docker Ready** — Single-command deployment via Docker Compose for production-grade frontend & backend.
 
 ## 🚀 Quick Start
 
 ### Option 1: pip install
 
 ```bash
-# Core only (lightweight, includes PDF flattening)
+# Core only (lightweight)
 pip install uniocr
 
 # With PaddleOCR-VL (powerful document AI, ~1.8 GB model download on first run)
@@ -68,20 +45,14 @@ pip install "uniocr[paddle]"
 # With Apple Vision (macOS only, uses built-in system OCR)
 pip install "uniocr[apple]"
 
-# With REST API server
-pip install "uniocr[api]"
-
-# Everything
+# Everything (Recommended for Dashboard & API)
 pip install "uniocr[all]"
 ```
 
 ### Option 2: Docker (recommended for servers)
 
 ```bash
-# Quick start — pull and run in detached mode
-docker run -d --name uniocr -p 8000:8000 ghcr.io/yuanweize/uni-ocr:latest
-
-# Or use Docker Compose (recommended)
+# Use Docker Compose (pulls and runs all components instantly)
 curl -O https://raw.githubusercontent.com/yuanweize/uni-ocr/master/docker-compose.yml
 docker compose up -d
 
@@ -102,149 +73,44 @@ doc = ocr.extract("invoice.pdf")
 print(doc.text)                       # Plain text
 print(doc.markdown)                   # Structured Markdown
 print(doc.to_dict())                  # JSON-serialisable dict
-
-# Access individual blocks with layout info
-for page in doc.pages:
-    for block in page.blocks:
-        print(f"[{block.block_type}] {block.text}")
-        print(f"  bbox: {block.bbox}, confidence: {block.confidence}")
 ```
 
 ### CLI
 
 ```bash
-# List available engines
-uniocr engines
-# Output:
-#   Available engines:
-#     • paddle
-#     • apple
+# Start the full Web UI Console & API server
+uniocr serve --port 8000
 
 # Extract text (outputs Markdown by default)
 uniocr extract document.pdf -o result.md
 
-# Generate a Searchable PDF (automatically triggered by .pdf extension)
+# Generate a Searchable PDF
 uniocr extract input_image.jpg -o output_searchable.pdf
-
-# Specify engine and output format
-uniocr extract scan.png --engine apple --format json -o result.json
-
-# Extract from a URL
-uniocr extract "https://example.com/receipt.png" --format text
-
-# Start the API server (single worker)
-uniocr serve --port 8000
-
-# Production: multiple workers
-uniocr serve --port 8000 --workers 4
 ```
 
-### REST API
+### REST API & Dashboard Console
 
 Start the server:
 
 ```bash
 uniocr serve --port 8000
-# Or via Docker:
-docker compose up -d
 ```
+- **Web UI Console**: `http://localhost:8000/`
+- **System Settings & Radar**: `http://localhost:8000/settings`
+- **Interactive API Docs**: `http://localhost:8000/docs`
 
 #### Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/health` | Health check & engine list |
-| `GET` | `/engines` | List available OCR engines |
-| `GET` | `/docs` | Interactive Swagger docs |
 | `POST` | `/extract` | Extract text from uploaded file (JSON/Markdown) |
 | `POST` | `/extract/pdf` | Extract text and return a Searchable PDF file |
 | `POST` | `/extract/url` | Extract text from URL |
-| `POST` | `/extract/batch` | Process multiple files |
 
-#### Examples
+*(If Public API Access is disabled, these endpoints require an `Authorization: Bearer <API_KEY>` header).*
 
-```bash
-# Health check
-curl http://localhost:8000/health
-# → {"status":"ok","version":"0.2.2","engines":["paddle","apple"]}
-
-# Upload a file
-curl -X POST http://localhost:8000/extract \
-  -F "file=@invoice.pdf" \
-  -F "engine=auto"
-
-# Extract via URL
-curl -X POST http://localhost:8000/extract/url \
-  -F "url=https://example.com/image.png"
-
-# Return a Searchable PDF directly
-curl -X POST http://localhost:8000/extract/pdf \
-  -F "file=@scan.png" -o searchable.pdf
-
-# Batch processing
-curl -X POST http://localhost:8000/extract/batch \
-  -F "files=@page1.png" -F "files=@page2.png" \
-  -F "engine=auto"
-```
-
-#### Response format
-
-```json
-{
-  "request_id": "ab07767c-331f-4f26-be01-2fcb75d36149",
-  "engine": "PaddleOCRVLAdapter",
-  "page_count": 1,
-  "text": "Invoice #12345\nTotal: €1,234.56",
-  "markdown": "# Invoice #12345\n\nTotal: €1,234.56",
-  "pages": [
-    {
-      "page_number": 1,
-      "text": "...",
-      "markdown": "...",
-      "blocks": [
-        {
-          "block_type": "text",
-          "text": "Invoice #12345",
-          "bbox": [0.05, 0.02, 0.45, 0.06],
-          "confidence": 0.98
-        }
-      ]
-    }
-  ],
-  "elapsed_seconds": 2.35
-}
-```
-
-## 🐳 Docker
-
-### Quick Run
-
-```bash
-# Run in background (detached mode)
-docker run -d \
-  --name uniocr \
-  -p 8000:8000 \
-  -v uniocr-models:/root/.paddlex \
-  ghcr.io/yuanweize/uni-ocr:latest
-```
-
-### Docker Compose (recommended)
-
-```bash
-# Download compose file
-curl -O https://raw.githubusercontent.com/yuanweize/uni-ocr/master/docker-compose.yml
-
-# Start in background
-docker compose up -d
-
-# View logs
-docker compose logs -f
-
-# Stop
-docker compose down
-```
-
-### Build locally
+## 🐳 Docker Build
 
 ```bash
 git clone https://github.com/yuanweize/uni-ocr.git
@@ -254,108 +120,13 @@ docker compose up -d --build
 
 ## 🔧 Engine Priority
 
-When `engine="auto"`, UniOCR selects the best available engine:
-
 | Priority | Engine | Best for | Speed |
 |----------|--------|----------|-------|
 | 1 | **PaddleOCR-VL** + MLX-VLM | Complex layouts, tables, formulas, 109 languages | ⚡⚡ |
 | 2 | **PaddleOCR-VL** (CPU) | Same capabilities, without MLX acceleration | ⚡ |
 | 3 | **Apple Vision** | Simple text, macOS only, instant | ⚡⚡⚡ |
 
-> **Apple Silicon users**: when `mlx-vlm` is installed, UniOCR automatically starts an MLX-VLM server for Neural Engine acceleration. No configuration needed. The server is cleaned up on exit.
-
-## 🔗 Integration Examples
-
-UniOCR is designed to be called by automation tools and AI agents.
-
-### n8n Workflow
-
-Use the **HTTP Request** node to call UniOCR:
-
-```
-Telegram Trigger → HTTP Request (UniOCR /extract) → AI Agent → ERPNext API
-```
-
-Configuration:
-- **Method**: `POST`
-- **URL**: `http://uniocr:8000/extract`
-- **Body**: Form-Data, `file` = `{{ $binary.data }}`
-
-### Dify Tool
-
-Add UniOCR as a custom tool in Dify with the OpenAPI spec at `/docs`.
-
-### Bob (macOS OCR Plugin)
-
-UniOCR can serve as the OCR backend for [Bob](https://bobtranslate.com/):
-
-```bash
-# Start UniOCR on the default port
-uniocr serve --port 8000
-# Bob → Preferences → OCR → Custom API → http://localhost:8000/extract
-```
-
-### Shell / Scripts
-
-```bash
-# Quick OCR from clipboard image (macOS)
-pbpaste | base64 | curl -s -X POST http://localhost:8000/extract \
-  -F "file=@-;filename=clipboard.png" | jq .text
-```
-
-## ⚙️ Configuration
-
-UniOCR works out of the box with zero configuration. For advanced use cases:
-
-| Environment Variable | Description | Default |
-|---------------------|-------------|---------|
-| `UNIOCR_PORT` | API server port (Docker Compose) | `8000` |
-| `UNIOCR_MLX_VLM_URL` | Override MLX-VLM server URL | Auto-detected |
-| `UNIOCR_MLX_VLM_MODEL` | MLX-VLM model identifier | `PaddlePaddle/PaddleOCR-VL-1.6` |
-
-Copy `.env.example` to `.env` to customise:
-
-```bash
-cp .env.example .env
-```
-
-## 📁 Project Structure
-
-```
-uni-ocr/
-├── src/uniocr/
-│   ├── __init__.py          # UniOCR main class & public API
-│   ├── models.py            # Document / Page / Block dataclasses
-│   ├── cli.py               # CLI: extract · engines · serve
-│   ├── api.py               # FastAPI REST service
-│   ├── engines/
-│   │   ├── __init__.py      # Engine registry & auto-dispatcher
-│   │   ├── base.py          # BaseOCREngine ABC
-│   │   ├── apple_vision.py  # macOS Vision adapter
-│   │   └── paddle.py        # PaddleOCR-VL + MLX-VLM adapter
-│   └── processors/
-│       └── input.py         # URL / Base64 / PDF normalisation
-├── assets/
-│   └── logo.svg             # Project logo
-├── Dockerfile
-├── docker-compose.yml
-├── .env.example
-├── pyproject.toml
-├── CLAUDE.md                # Development guidelines
-├── LICENSE                  # MIT
-├── README.md                # English docs (this file)
-└── README_zh.md             # 中文文档
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please open an issue or pull request.
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feat/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feat/amazing-feature`)
-5. Open a Pull Request
+> **Apple Silicon users**: when `mlx-vlm` is installed, UniOCR automatically starts an MLX-VLM server for Neural Engine acceleration. No configuration needed.
 
 ## 📄 License
 
