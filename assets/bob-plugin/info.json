@@ -1,0 +1,10 @@
+{
+  "identifier": "com.yuanweize.uniocr.bobplugin",
+  "version": "0.1.0",
+  "category": "ocr",
+  "name": "UniOCR (Local)",
+  "author": "Weize Yuan",
+  "homepage": "https://github.com/yuanweize/uni-ocr",
+  "summary": "Connects to a local UniOCR server for blazing-fast, multilingual document OCR.",
+  "appcast": ""
+}

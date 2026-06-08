@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://uniocr:8000/extract/base64",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"base64_data\": \"{{ $binary.data.data }}\",\n  \"engine\": \"auto\"\n}",
+        "options": {}
+      },
+      "id": "c62040d8-04f5-4a6c-9a4f-01a2f64e03f0",
+      "name": "UniOCR Extract (Base64)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        820,
+        340
+      ]
+    }
+  ],
+  "connections": {}
+}
