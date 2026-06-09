@@ -16,6 +16,14 @@ const AmbientBackground = () => (
   </>
 );
 
+// Protected Route Wrapper
+const ProtectedRoute = ({ children, isPublic, requiresAuth = false }: { children: React.ReactNode, isPublic?: boolean, requiresAuth?: boolean }) => {
+  const token = localStorage.getItem('token');
+  if (requiresAuth && !token) return <Navigate to="/login" replace />;
+  if (isPublic === false && !token) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+};
+
 function App() {
   const [isPublic, setIsPublic] = useState<boolean | null>(null);
 
@@ -37,13 +45,13 @@ function App() {
         
         <Route element={<Layout />}>
           <Route path="/" element={
-            (isPublic === false && !localStorage.getItem('token')) ? <Navigate to="/login" replace /> : <OcrConsole isPublic={isPublic!} />
+            <ProtectedRoute isPublic={isPublic}><OcrConsole isPublic={isPublic!} /></ProtectedRoute>
           } />
           <Route path="/docs-ui" element={
-            (isPublic === false && !localStorage.getItem('token')) ? <Navigate to="/login" replace /> : <ApiDocs />
+            <ProtectedRoute isPublic={isPublic}><ApiDocs /></ProtectedRoute>
           } />
           <Route path="/settings" element={
-            !localStorage.getItem('token') ? <Navigate to="/login" replace /> : <Settings />
+            <ProtectedRoute requiresAuth><Settings /></ProtectedRoute>
           } />
         </Route>
         
