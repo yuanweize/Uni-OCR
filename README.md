@@ -20,7 +20,7 @@
 
 Built for developers, AI agents, and automation pipelines (n8n, Dify, Telegram bots, etc.).
 
-## ✨ V1.0 Pro Max Highlights
+## ✨ V3.0 Pro Max Highlights
 
 - 🖥️ **Stunning Enterprise Dashboard** — A fully re-engineered Glassmorphism Web UI featuring an interactive OCR playground, API generator, and live system monitoring.
 - 📊 **Geek-Level Hardware Radar** — Real-time backend polling of physical sensor data: CPU/GPU frequencies, RAM/Swap allocation, Apple Neural Engine status, and active AI model library versions.

@@ -20,7 +20,7 @@
 
 专为开发者、AI Agent 和自动化管线（n8n、Dify、Telegram Bot 等）设计。
 
-## ✨ V1.0 Pro Max 核心特性
+## ✨ V3.0 Pro Max 核心特性
 
 - 🖥️ **极其优雅的企业级控制台** — 全新构建的 Glassmorphism (毛玻璃) 现代化 Web UI，集成了交互式 OCR 游乐场、API 生成器及完整运行监控。
 - 📊 **极客级硬件雷达** — 实时探测并轮询服务器物理底层状态：从 CPU/GPU 频率、内存/Swap 分配，到 Apple Neural Engine 及底层模型库真实加载状态，尽收眼底。
