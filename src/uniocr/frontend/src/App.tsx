@@ -36,9 +36,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         
         <Route element={<Layout />}>
-          <Route path="/" element={<OcrConsole isPublic={isPublic} />} />
-          <Route path="/docs-ui" element={<ApiDocs />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/" element={
+            (isPublic === false && !localStorage.getItem('token')) ? <Navigate to="/login" replace /> : <OcrConsole isPublic={isPublic!} />
+          } />
+          <Route path="/docs-ui" element={
+            (isPublic === false && !localStorage.getItem('token')) ? <Navigate to="/login" replace /> : <ApiDocs />
+          } />
+          <Route path="/settings" element={
+            !localStorage.getItem('token') ? <Navigate to="/login" replace /> : <Settings />
+          } />
         </Route>
         
         <Route path="*" element={<Navigate to="/" replace />} />

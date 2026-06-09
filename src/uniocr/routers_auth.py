@@ -147,7 +147,7 @@ def disable_2fa(req: Setup2FARequest, user=Depends(get_current_user), db: Sessio
     return {"status": "success"}
 
 @router.get("/config")
-def get_config(user=Depends(get_current_user), db: Session = Depends(get_db)):
+def get_config(db: Session = Depends(get_db)):
     is_public = db.query(Config).filter(Config.key == "is_ocr_public").first()
     admin = db.query(User).filter(User.username == "admin").first()
     return {
