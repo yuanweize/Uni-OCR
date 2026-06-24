@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { UploadCloud, FileType, Type, FileJson, Loader2, Download, ScanText, Terminal } from 'lucide-react';
+import { UploadCloud, FileType, Type, FileJson, Loader2, Download, ScanText } from 'lucide-react';
 
 export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
   const [file, setFile] = useState<File | null>(null);
@@ -208,10 +208,11 @@ export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
         {/* Left Column: Controls & Logs */}
         <div className="w-full lg:w-96 flex flex-col gap-6">
           
-          <div className="glass-panel p-6 flex flex-col gap-4">
-            <h3 className="font-semibold text-white/80 mb-2">1. Upload Source</h3>
-            <div 
-              className="border-2 border-dashed border-white/20 hover:border-primary/50 bg-white/5 rounded-xl p-8 flex flex-col items-center justify-center gap-4 cursor-pointer transition-all"
+          <div className="glass-panel p-8 flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+              <div className="text-xs font-semibold text-white/40 tracking-wider">SOURCE</div>
+              <div 
+                className="border border-white/5 hover:border-white/20 bg-black/20 rounded-xl p-8 flex flex-col items-center justify-center gap-4 cursor-pointer transition-all"
               onClick={() => fileInputRef.current?.click()}
             >
               <UploadCloud size={32} className="text-white/50" />
@@ -222,14 +223,20 @@ export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
               <input type="file" className="hidden" ref={fileInputRef} onChange={e => setFile(e.target.files?.[0] || null)} />
             </div>
 
-            <h3 className="font-semibold text-white/80 mt-4 mb-2">2. Processing Engine</h3>
+            </div>
+
+            <div className="flex flex-col gap-3 mt-2">
+              <div className="text-xs font-semibold text-white/40 tracking-wider">ENGINE</div>
             <select value={engine} onChange={e => setEngine(e.target.value)} className="glass-input w-full appearance-none">
               <option value="auto" className="bg-gray-900">Auto (Best Match)</option>
               <option value="paddle" className="bg-gray-900">PaddleOCR-VL (Deep Doc)</option>
               <option value="apple" className="bg-gray-900">Apple Vision (Native)</option>
             </select>
 
-            <h3 className="font-semibold text-white/80 mt-4 mb-2">3. Output Format</h3>
+            </div>
+
+            <div className="flex flex-col gap-3 mt-2">
+              <div className="text-xs font-semibold text-white/40 tracking-wider">FORMAT</div>
             <div className="grid grid-cols-2 gap-2">
               {[
                 { id: 'markdown', icon: Type, label: 'Markdown' },
@@ -247,6 +254,7 @@ export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
                 </button>
               ))}
             </div>
+            </div>
 
             <button 
               onClick={handleProcess} 
@@ -259,12 +267,8 @@ export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
           </div>
 
           {/* Terminal Log Panel */}
-          <div className="glass-panel flex-1 min-h-[200px] flex flex-col overflow-hidden bg-black/60">
-            <div className="border-b border-white/10 p-3 bg-black/40 flex items-center gap-2">
-              <Terminal size={14} className="text-white/50" />
-              <span className="text-xs font-bold text-white/50 tracking-wider">PROCESS LOGS</span>
-            </div>
-            <div className="flex-1 overflow-auto p-4 custom-scrollbar font-mono text-[11px] leading-relaxed">
+          <div className="glass-panel flex-1 min-h-[200px] flex flex-col overflow-hidden bg-[#050505]">
+            <div className="flex-1 overflow-auto p-5 custom-scrollbar font-mono text-[11px] leading-relaxed text-white/60">
               {logs.length === 0 ? (
                 <span className="text-white/20">Waiting for extraction to start...</span>
               ) : (
@@ -282,8 +286,8 @@ export default function OcrConsole({ isPublic }: { isPublic: boolean }) {
 
         {/* Results Panel */}
         <div className="flex-1 glass-panel flex flex-col overflow-hidden min-h-[400px]">
-          <div className="border-b border-white/10 p-4 bg-white/5 flex justify-between items-center min-h-[60px]">
-            <h3 className="font-semibold text-white/80">Result Viewer</h3>
+          <div className="border-b border-white/5 p-4 bg-transparent flex justify-between items-center min-h-[60px]">
+            <div className="text-xs font-semibold text-white/40 tracking-wider">OUTPUT</div>
             {renderDownloadButton()}
           </div>
           <div className="flex-1 overflow-hidden relative">

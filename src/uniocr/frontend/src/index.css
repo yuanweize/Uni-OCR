@@ -7,11 +7,11 @@
     --background: #0a0a0c;
     --foreground: #ededef;
     
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
     
-    --primary: #5e6ad2;
-    --primary-foreground: #ffffff;
+    --primary: #ffffff;
+    --primary-foreground: #000000;
   }
   
   body {
@@ -21,7 +21,7 @@
 
 @layer components {
   .glass-panel {
-    @apply bg-glass backdrop-blur-xl border border-glass-border rounded-2xl shadow-2xl;
+    @apply bg-[--glass-bg] backdrop-blur-3xl border border-[--glass-border] rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05)];
   }
   
   .glass-input {
@@ -33,7 +33,7 @@
   }
   
   .glass-button-primary {
-    @apply glass-button bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_20px_rgba(94,106,210,0.3)] hover:shadow-[0_0_30px_rgba(94,106,210,0.5)];
+    @apply glass-button bg-primary text-primary-foreground hover:bg-white/90;
   }
   
   .glass-button-secondary {
@@ -41,18 +41,4 @@
   }
 }
 
-/* Ambient animated background blobs */
-.ambient-blob {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-  opacity: 0.4;
-  animation: float 20s infinite ease-in-out;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-}
+/* Removed AI gradient blobs per taste-skill anti-slop rules */

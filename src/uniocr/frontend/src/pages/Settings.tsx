@@ -196,7 +196,7 @@ export default function Settings() {
                   <span className="text-white text-xs font-medium">{systemInfo.gpu_percent}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
-                  <div className={`h-full ${systemInfo.gpu_percent > 80 ? 'bg-red-500' : 'bg-purple-500'}`} style={{ width: `${systemInfo.gpu_percent}%` }} />
+                  <div className={`h-full ${systemInfo.gpu_percent > 80 ? 'bg-red-500' : 'bg-white/80'}`} style={{ width: `${systemInfo.gpu_percent}%` }} />
                 </div>
               </div>
               <div>
@@ -214,7 +214,7 @@ export default function Settings() {
                   <span className="text-white text-xs font-medium">{systemInfo.disk_used_percent}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
-                  <div className={`h-full ${systemInfo.disk_used_percent > 80 ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${systemInfo.disk_used_percent}%` }} />
+                  <div className={`h-full ${systemInfo.disk_used_percent > 80 ? 'bg-red-500' : 'bg-white/80'}`} style={{ width: `${systemInfo.disk_used_percent}%` }} />
                 </div>
               </div>
               <div>
@@ -223,7 +223,7 @@ export default function Settings() {
                   <span className="text-white text-xs font-medium">{systemInfo.swap_percent}%</span>
                 </div>
                 <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden">
-                  <div className={`h-full ${systemInfo.swap_percent > 50 ? 'bg-red-500' : 'bg-orange-500'}`} style={{ width: `${systemInfo.swap_percent}%` }} />
+                  <div className={`h-full ${systemInfo.swap_percent > 50 ? 'bg-red-500' : 'bg-white/60'}`} style={{ width: `${systemInfo.swap_percent}%` }} />
                 </div>
               </div>
             </div>

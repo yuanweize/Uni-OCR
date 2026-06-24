@@ -22,6 +22,11 @@ Built for developers, AI agents, and automation pipelines (n8n, Dify, Telegram b
 
 ## ✨ V3.0 Pro Max Highlights
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/dashboard.png" alt="UniOCR Web Dashboard" width="100%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); margin-bottom: 20px;"/>
+  <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/settings.png" alt="UniOCR Hardware Radar" width="100%" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);"/>
+</p>
+
 - 🖥️ **Stunning Enterprise Dashboard** — A fully re-engineered Glassmorphism Web UI featuring an interactive OCR playground, API generator, and live system monitoring.
 - 📊 **Geek-Level Hardware Radar** — Real-time backend polling of physical sensor data: CPU/GPU frequencies, RAM/Swap allocation, Apple Neural Engine status, and active AI model library versions.
 - 🔐 **Military-Grade Security** — Built-in local SQLite persistence. Full support for 2FA (TOTP), Admin master passwords, and one-click toggles between public/private API access.
