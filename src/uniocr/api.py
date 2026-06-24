@@ -70,36 +70,46 @@ app.include_router(stream_router)
 
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
-    return get_swagger_ui_html(
+    from fastapi.responses import HTMLResponse
+    
+    response = get_swagger_ui_html(
         openapi_url=app.openapi_url,
         title=app.title + " - Swagger UI",
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_ui_parameters={"syntaxHighlight.theme": "monokai", "defaultModelsExpandDepth": -1},
-        swagger_css_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
-        custom_css="""
-            body { background: #1a1a2e; }
-            .swagger-ui .topbar { background: #16213e; }
-            .swagger-ui .info .title { color: #e0e0e0; }
-            .swagger-ui .info p, .swagger-ui .info li { color: #b0b0b0; }
-            .swagger-ui .scheme-container { background: #16213e; box-shadow: none; }
-            .swagger-ui .opblock-tag { color: #e0e0e0; border-bottom-color: #333; }
-            .swagger-ui .opblock .opblock-summary-description { color: #999; }
-            .swagger-ui .opblock .opblock-section-header { background: rgba(0,0,0,0.2); }
-            .swagger-ui .opblock .opblock-section-header h4 { color: #ccc; }
-            .swagger-ui .model-box, .swagger-ui section.models { background: #16213e; }
-            .swagger-ui .model { color: #ccc; }
-            .swagger-ui table thead tr th { color: #ccc; border-bottom-color: #444; }
-            .swagger-ui .parameter__name { color: #e0e0e0; }
-            .swagger-ui .parameter__type { color: #999; }
-            .swagger-ui input[type=text], .swagger-ui textarea, .swagger-ui select {
-                background: #2a2a4a; color: #e0e0e0; border-color: #444;
-            }
-            .swagger-ui .btn { border-color: #555; color: #ccc; }
-            .swagger-ui .response-col_status { color: #e0e0e0; }
-            .swagger-ui .response-col_description p { color: #999; }
-            .swagger-ui .markdown p, .swagger-ui .markdown pre { color: #b0b0b0; }
-        """
+        swagger_css_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"
     )
+    
+    custom_css = """
+    <style>
+        body { background: #1a1a2e; }
+        .swagger-ui .topbar { background: #16213e; }
+        .swagger-ui .info .title { color: #e0e0e0; }
+        .swagger-ui .info p, .swagger-ui .info li { color: #b0b0b0; }
+        .swagger-ui .scheme-container { background: #16213e; box-shadow: none; }
+        .swagger-ui .opblock-tag { color: #e0e0e0; border-bottom-color: #333; }
+        .swagger-ui .opblock .opblock-summary-description { color: #999; }
+        .swagger-ui .opblock .opblock-section-header { background: rgba(0,0,0,0.2); }
+        .swagger-ui .opblock .opblock-section-header h4 { color: #ccc; }
+        .swagger-ui .model-box, .swagger-ui section.models { background: #16213e; }
+        .swagger-ui .model { color: #ccc; }
+        .swagger-ui table thead tr th { color: #ccc; border-bottom-color: #444; }
+        .swagger-ui .parameter__name { color: #e0e0e0; }
+        .swagger-ui .parameter__type { color: #999; }
+        .swagger-ui input[type=text], .swagger-ui textarea, .swagger-ui select {
+            background: #2a2a4a; color: #e0e0e0; border-color: #444;
+        }
+        .swagger-ui .btn { border-color: #555; color: #ccc; }
+        .swagger-ui .response-col_status { color: #e0e0e0; }
+        .swagger-ui .response-col_description p { color: #999; }
+        .swagger-ui .markdown p, .swagger-ui .markdown pre { color: #b0b0b0; }
+    </style>
+    """
+    
+    # Inject the custom CSS right before the closing </head> tag
+    html_content = response.body.decode("utf-8")
+    html_content = html_content.replace("</head>", f"{custom_css}\n</head>")
+    return HTMLResponse(html_content)
 
 # ---------------------------------------------------------------------------
 # Standardised Error Handling (RFC 7807)
