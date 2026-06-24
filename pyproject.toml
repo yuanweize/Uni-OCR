@@ -1,6 +1,6 @@
 [project]
 name = "uniocr"
-version = "3.1.0"
+version = "3.1.1"
 description = "Unified multilingual OCR tool based on PaddleOCR-VL and Apple Vision."
 readme = "README.md"
 authors = [
