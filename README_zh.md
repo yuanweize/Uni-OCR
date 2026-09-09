@@ -20,7 +20,7 @@
 
 专为开发者、AI Agent 和自动化管线（n8n、Dify、Telegram Bot 等）设计。
 
-## ✨ 核心特性
+## 核心特性
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/dashboard.png" alt="UniOCR Web Dashboard" width="80%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
@@ -28,16 +28,16 @@
   <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/settings.png" alt="UniOCR Hardware Radar" width="80%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
 </div>
 
-- 🖥️ **极其优雅的企业级控制台** — 全新构建的 Glassmorphism (毛玻璃) 现代化 Web UI，集成了交互式 OCR 游乐场、API 生成器及完整运行监控。
-- 📊 **极客级硬件雷达** — 实时探测并轮询服务器物理底层状态：从 CPU/GPU 频率、内存/Swap 分配，到 Apple Neural Engine 及底层模型库真实加载状态，尽收眼底。
-- 🔐 **军工级数据安全** — 内置本地 SQLite 持久化数据库。全面支持 2FA 动态令牌两步验证、Admin 强密码管理及私有/公开控制台一键切换。
-- 🔑 **丝滑的 API Key 管理** — 界面化一键签发/吊销 API Token，并在生成时贴心提供组装好的专属 `curl` 联调代码片段。
-- 🔌 **双擎无缝切换** — 深度文档 AI (PaddleOCR-VL) 与 macOS 原生视觉 (Apple Vision)，支持自动降级兜底。
-- ⚡ **零配置满血加速** — 自动探测 Apple Silicon → 启动 MLX-VLM 引擎 → 满血调用 NPU 神经网络引擎。
-- 🚀 **零时差智能缓存 (LRU)** — 对近期文件瞬间完成结果格式切换（TXT、JSON、MD、PDF），秒级下载与预览，拒绝重复消耗算力。
-- 🐳 **Docker 极简部署** — 提供官方镜像，一行代码拉起完整的前后端生产级服务。
+- **极其优雅的企业级控制台** — 全新构建的 Glassmorphism (毛玻璃) 现代化 Web UI，集成了交互式 OCR 游乐场、API 生成器及完整运行监控。
+- **极客级硬件雷达** — 实时探测并轮询服务器物理底层状态：从 CPU/GPU 频率、内存/Swap 分配，到 Apple Neural Engine 及底层模型库真实加载状态，尽收眼底。
+- **军工级数据安全** — 内置本地 SQLite 持久化数据库。全面支持 2FA 动态令牌两步验证、Admin 强密码管理及私有/公开控制台一键切换。
+- **丝滑的 API Key 管理** — 界面化一键签发/吊销 API Token，并在生成时贴心提供组装好的专属 `curl` 联调代码片段。
+- **双擎无缝切换** — 深度文档 AI (PaddleOCR-VL) 与 macOS 原生视觉 (Apple Vision)，支持自动降级兜底。
+- **零配置满血加速** — 自动探测 Apple Silicon → 启动 MLX-VLM 引擎 → 满血调用 NPU 神经网络引擎。
+- **零时差智能缓存 (LRU)** — 对近期文件瞬间完成结果格式切换（TXT、JSON、MD、PDF），秒级下载与预览，拒绝重复消耗算力。
+- **Docker 极简部署** — 提供官方镜像，一行代码拉起完整的前后端生产级服务。
 
-## 🚀 快速开始
+## 快速开始
 
 ### 方式一：pip 安装
 
@@ -66,7 +66,7 @@ docker compose up -d
 curl http://localhost:8000/health
 ```
 
-## 📖 使用方式
+## 使用方式
 
 ### Python SDK
 
@@ -115,7 +115,7 @@ uniocr serve --port 8000
 
 *(以上接口若关闭了公开访问，则均可通过在 Header 传入 `Authorization: Bearer <API_KEY>` 进行调用)*
 
-## 🐳 Docker 部署
+## Docker 部署
 
 ```bash
 git clone https://github.com/yuanweize/uni-ocr.git
@@ -123,7 +123,7 @@ cd uni-ocr
 docker compose up -d --build
 ```
 
-## 🔧 引擎优先级
+## 引擎优先级
 
 | 优先级 | 引擎 | 适用场景 | 速度 |
 |--------|------|---------|------|
@@ -133,6 +133,6 @@ docker compose up -d --build
 
 > 在 Apple Silicon 上，安装 `mlx-vlm` 后 UniOCR 会**自动启动** MLX-VLM 服务，满载 NPU。完全零配置。
 
-## 📄 许可证
+## 许可证
 
 [MIT](LICENSE) © 2026 Weize Yuan

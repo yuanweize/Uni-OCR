@@ -20,7 +20,7 @@
 
 Built for developers, AI agents, and automation pipelines (n8n, Dify, Telegram bots, etc.).
 
-## ✨ Key Features
+## Key Features
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/dashboard.png" alt="UniOCR Web Dashboard" width="80%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
@@ -28,16 +28,16 @@ Built for developers, AI agents, and automation pipelines (n8n, Dify, Telegram b
   <img src="https://raw.githubusercontent.com/yuanweize/uni-ocr/refs/heads/master/assets/settings.png" alt="UniOCR Hardware Radar" width="80%" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
 </div>
 
-- 🖥️ **Stunning Enterprise Dashboard** — A fully re-engineered Glassmorphism Web UI featuring an interactive OCR playground, API generator, and live system monitoring.
-- 📊 **Geek-Level Hardware Radar** — Real-time backend polling of physical sensor data: CPU/GPU frequencies, RAM/Swap allocation, Apple Neural Engine status, and active AI model library versions.
-- 🔐 **Military-Grade Security** — Built-in local SQLite persistence. Full support for 2FA (TOTP), Admin master passwords, and one-click toggles between public/private API access.
-- 🔑 **Seamless API Key Management** — Issue and revoke API Tokens directly from the UI, with auto-generated ready-to-use `curl` snippets for instant integration testing.
-- 🔌 **Pluggable Engines** — PaddleOCR-VL (deep document AI) and Apple Vision (native macOS) with automatic priority fallback.
-- ⚡ **Zero-Config Acceleration** — Auto-detects Apple Silicon → launches MLX-VLM → offloads to Neural Engine (NPU).
-- 🚀 **Zero-Delay Smart Cache (LRU)** — Instantaneous format switching (TXT, JSON, MD, PDF download/preview) for recent files without re-running the neural network.
-- 🐳 **Docker Ready** — Single-command deployment via Docker Compose for production-grade frontend & backend.
+- **Stunning Enterprise Dashboard** — A fully re-engineered Glassmorphism Web UI featuring an interactive OCR playground, API generator, and live system monitoring.
+- **Geek-Level Hardware Radar** — Real-time backend polling of physical sensor data: CPU/GPU frequencies, RAM/Swap allocation, Apple Neural Engine status, and active AI model library versions.
+- **Military-Grade Security** — Built-in local SQLite persistence. Full support for 2FA (TOTP), Admin master passwords, and one-click toggles between public/private API access.
+- **Seamless API Key Management** — Issue and revoke API Tokens directly from the UI, with auto-generated ready-to-use `curl` snippets for instant integration testing.
+- **Pluggable Engines** — PaddleOCR-VL (deep document AI) and Apple Vision (native macOS) with automatic priority fallback.
+- **Zero-Config Acceleration** — Auto-detects Apple Silicon → launches MLX-VLM → offloads to Neural Engine (NPU).
+- **Zero-Delay Smart Cache (LRU)** — Instantaneous format switching (TXT, JSON, MD, PDF download/preview) for recent files without re-running the neural network.
+- **Docker Ready** — Single-command deployment via Docker Compose for production-grade frontend & backend.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: pip install
 
@@ -66,7 +66,7 @@ docker compose up -d
 curl http://localhost:8000/health
 ```
 
-## 📖 Usage
+## Usage
 
 ### Python SDK
 
@@ -116,7 +116,7 @@ uniocr serve --port 8000
 
 *(If Public API Access is disabled, these endpoints require an `Authorization: Bearer <API_KEY>` header).*
 
-## 🐳 Docker Build
+## Docker Build
 
 ```bash
 git clone https://github.com/yuanweize/uni-ocr.git
@@ -124,7 +124,7 @@ cd uni-ocr
 docker compose up -d --build
 ```
 
-## 🔧 Engine Priority
+## Engine Priority
 
 | Priority | Engine | Best for | Speed |
 |----------|--------|----------|-------|
@@ -134,6 +134,6 @@ docker compose up -d --build
 
 > **Apple Silicon users**: when `mlx-vlm` is installed, UniOCR automatically starts an MLX-VLM server for Neural Engine acceleration. No configuration needed.
 
-## 📄 License
+## License
 
 [MIT](LICENSE) © 2026 Weize Yuan
