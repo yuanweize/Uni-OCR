@@ -1,0 +1,58 @@
+name: Bug Report
+description: Report a bug or issue with Uni-OCR.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please ensure that no sensitive document contents or personal information are included in your report.
+  - type: input
+    id: version
+    attributes:
+      label: Uni-OCR Version
+      description: What version of Uni-OCR are you running? (e.g. `v0.2.3` or commit SHA)
+      placeholder: v0.2.3
+    validations:
+      required: true
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Execution Environment
+      options:
+        - macOS (Apple Silicon - Metal / RapidOCR)
+        - macOS (Intel)
+        - Linux / Docker
+        - Windows
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Clear and concise description of the bug.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can this issue be reproduced?
+      placeholder: |
+        1. Start server with `uv run uvicorn ...`
+        2. Post image to `/ocr`
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Traceback
+      description: Paste any error traceback or logs here.
+      render: shell
