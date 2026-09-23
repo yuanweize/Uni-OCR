@@ -22,4 +22,4 @@ If you discover a security vulnerability or potential exploit in Uni-OCR:
 1. **Do NOT open a public issue.**
 2. Report the vulnerability privately via [GitHub Security Advisories](https://github.com/yuanweize/Uni-OCR/security/advisories/new) or contact `yuanweize@users.noreply.github.com`.
 3. Provide reproduction steps, sample image/payload files if relevant, and the Uni-OCR version.
-4. We will acknowledge receipt within 48 hours and work on a coordinated fix.
+4. I aim to acknowledge valid security reports as soon as practical, investigate the root cause, and coordinate a patch.
